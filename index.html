@@ -4,65 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tool Online Gratuiti</title>
+    
+    <!-- Kodi i Google AdSense i lidhur saktë -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1846323556153354"
+         crossorigin="anonymous"></script>
+
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; padding: 30px; }
-        .container { background: white; padding: 25px; border-radius: 10px; display: inline-block; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); margin: 15px; width: 320px; vertical-align: top; }
-        textarea { width: 90%; height: 80px; padding: 10px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc; resize: none; margin-bottom: 10px; }
-        input[type="text"] { width: 90%; padding: 8px; font-size: 14px; text-align: center; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; }
-        button { background-color: #4CAF50; color: white; border: none; padding: 10px 15px; font-size: 14px; border-radius: 5px; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        p { font-size: 16px; font-weight: bold; color: #333; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Tool 1: Conta Parole -->
+    <h1>I Miei Strumenti Online</h1>
+
+    <!-- 1. Word Counter -->
     <div class="container">
-        <h2>Conta Parole</h2>
-        <textarea id="teksti" placeholder="Scrivi il testo qui..." oninput="numero()"></textarea>
-        <p>Parole: <span id="fjalet">0</span> | Caratteri: <span id="karakteret">0</span></p>
+        <h2>Contatore di Parole e Caratteri</h2>
+        <textarea id="textInput" placeholder="Scrivi o incolla il tuo testo qui..." oninput="countWords()"></textarea>
+        <div class="result" id="wordCountResult">Parole: 0 | Caratteri: 0</div>
     </div>
 
-    <!-- Tool 2: Generatore di Password -->
+    <!-- 2. Password Generator -->
     <div class="container">
-        <h2>Generatore Password</h2>
-        <input type="text" id="fjalekalimi" readonly placeholder="Clicca il pulsante sotto">
-        <br>
-        <button type="button" onclick="gjeneroFjalekalimin()">Genera Password</button>
+        <h2>Generatore di Password Sicure</h2>
+        <input type="text" id="passwordOutput" readonly placeholder="La tua password apparirà qui">
+        <button onclick="generatePassword()">Genera Password</button>
     </div>
 
-    <!-- Tool 3: Convertitore di Testo (Maiuscole) -->
+    <!-- 3. Text to Uppercase Converter -->
     <div class="container">
-        <h2>Convertitore Testo</h2>
-        <textarea id="tekstiPerKonvertim" placeholder="Scrivi il testo in minuscolo..."></textarea>
-        <br>
-        <button type="button" onclick="konvertoNeTeMadha()">Converti in Maiuscolo</button>
+        <h2>Convertitore Maiuscolo / Minuscolo</h2>
+        <textarea id="caseInput" placeholder="Inserisci il testo da convertire..."></textarea>
+        <button onclick="convertToUppercase()">Converti in Maiuscolo</button>
     </div>
 
     <script>
-        // Logica per Conta Parole
-        function numero() {
-            let t = document.getElementById("teksti").value.trim();
-            let karakteret = t.length;
-            let fjalet = t === "" ? 0 : t.split(/\s+/).length;
-            document.getElementById("karakteret").innerText = karakteret;
-            document.getElementById("fjalet").innerText = fjalet;
+        // Word Counter Logic
+        function countWords() {
+            let text = document.getElementById("textInput").value.trim();
+            let words = text === "" ? 0 : text.split(/\s+/).length;
+            let chars = text.length;
+            document.getElementById("wordCountResult").innerText = `Parole: ${words} | Caratteri: ${chars}`;
         }
 
-        // Logica per Generatore di Password
-        function gjeneroFjalekalimin() {
-            let kar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$!";
-            let rezultat = "";
-            for (let i = 0; i < 12; i++) {
-                rezultat += kar.charAt(Math.floor(Math.random() * kar.length));
+        // Password Generator Logic
+        function generatePassword() {
+            let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!";
+            let passwordLength = 12;
+            let password = "";
+            for (let i = 0; i < passwordLength; i++) {
+                password += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            document.getElementById("fjalekalimi").value = rezultat;
+            document.getElementById("passwordOutput").value = password;
         }
 
-        // Logica per Convertitore di Testo
-        function konvertoNeTeMadha() {
-            let zanafilla = document.getElementById("tekstiPerKonvertim").value;
-            document.getElementById("tekstiPerKonvertim").value = zanafilla.toUpperCase();
+        // Uppercase Converter Logic
+        function convertToUppercase() {
+            let textElement = document.getElementById("caseInput");
+            textElement.value = textElement.value.toUpperCase();
         }
     </script>
 
