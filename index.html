@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Online Gratuiti</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f9; text-align: center; padding: 30px; }
+        .container { background: white; padding: 25px; border-radius: 10px; display: inline-block; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); margin: 15px; width: 320px; vertical-align: top; }
+        textarea { width: 90%; height: 80px; padding: 10px; font-size: 14px; border-radius: 5px; border: 1px solid #ccc; resize: none; margin-bottom: 10px; }
+        input[type="text"] { width: 90%; padding: 8px; font-size: 14px; text-align: center; border-radius: 5px; border: 1px solid #ccc; margin-bottom: 10px; }
+        button { background-color: #4CAF50; color: white; border: none; padding: 10px 15px; font-size: 14px; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        p { font-size: 16px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <!-- Tool 1: Conta Parole -->
+    <div class="container">
+        <h2>Conta Parole</h2>
+        <textarea id="teksti" placeholder="Scrivi il testo qui..." oninput="numero()"></textarea>
+        <p>Parole: <span id="fjalet">0</span> | Caratteri: <span id="karakteret">0</span></p>
+    </div>
+
+    <!-- Tool 2: Generatore di Password -->
+    <div class="container">
+        <h2>Generatore Password</h2>
+        <input type="text" id="fjalekalimi" readonly placeholder="Clicca il pulsante sotto">
+        <br>
+        <button type="button" onclick="gjeneroFjalekalimin()">Genera Password</button>
+    </div>
+
+    <!-- Tool 3: Convertitore di Testo (Maiuscole) -->
+    <div class="container">
+        <h2>Convertitore Testo</h2>
+        <textarea id="tekstiPerKonvertim" placeholder="Scrivi il testo in minuscolo..."></textarea>
+        <br>
+        <button type="button" onclick="konvertoNeTeMadha()">Converti in Maiuscolo</button>
+    </div>
+
+    <script>
+        // Logica per Conta Parole
+        function numero() {
+            let t = document.getElementById("teksti").value.trim();
+            let karakteret = t.length;
+            let fjalet = t === "" ? 0 : t.split(/\s+/).length;
+            document.getElementById("karakteret").innerText = karakteret;
+            document.getElementById("fjalet").innerText = fjalet;
+        }
+
+        // Logica per Generatore di Password
+        function gjeneroFjalekalimin() {
+            let kar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$!";
+            let rezultat = "";
+            for (let i = 0; i < 12; i++) {
+                rezultat += kar.charAt(Math.floor(Math.random() * kar.length));
+            }
+            document.getElementById("fjalekalimi").value = rezultat;
+        }
+
+        // Logica per Convertitore di Testo
+        function konvertoNeTeMadha() {
+            let zanafilla = document.getElementById("tekstiPerKonvertim").value;
+            document.getElementById("tekstiPerKonvertim").value = zanafilla.toUpperCase();
+        }
+    </script>
+
+</body>
+</html>
